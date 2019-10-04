@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>storage</title>
+	<script type="text/javascript">
+		window.onload = function () {
+			document.getElementById('guardar').addEventListener('click', guardarLista);
+			document.getElementById('borrar').addEventListener('click', borrarLista);
+			document.getElementById('imprimir').addEventListener('click', imprimirLista);
+			//recuperar lista guardada
+			recuperarLista();
+		}
+
+		function guardarLista () {
+			//recupera contenido
+			var contenido=document.getElementById('listacompra').innerHTML;
+			//guardar contenido en storage
+			//alert(contenido);
+			//sesionStorage vs localStorage
+			localStorage.setItem('lista', contenido);
+			alert('lista guardada');
+		}
+		function recuperarLista () {
+			
+			if (localStorage.getItem('lista')!=undefined) {
+				//leer lista del storage 
+				var lista = localStorage.getItem('lista');
+				//informar la lista del documento
+				document.getElementById('listacompra').innerHTML = lista;
+			} 
+		}
+		function borrarLista() {
+			confirmar=confirm('Seguro que desea borrar la lista')
+			if (confirmar) {
+				localStorage.removeItem('lista');
+				document.getElementById('listacompra').innerHTML='<li></li>'
+				alert('lista borrada');
+			}
+			
+		}
+		function imprimirLista() {
+			//	window.print(); //imprime toda la página
+			//  imprimir una sección de la página
+			//abrimos una ventana vacia
+			var miVentana=window.open('', '_blank'); //abrimos una ventana emergente
+			//escribimos el contenido a imprimir en la ventana
+			miVentana.document.write(document.getElementById('listacompra').innerHTML);
+			//imprimimos la ventana
+			miVentana.print();
+			//cerramos la ventana
+			miVentana.close();
+		}
+
+
+	</script>
+</head>
+<body>
+	<section id="editable" >
+		<h2>Escribe tu pedido:</h2>
+		<ul contenteditable="true" id="listacompra">
+			<li>2 bolsas de patatas</li>
+			<li>1 dónut</li>
+			<li>4 Kg. de boniatos</li>
+			</ul>
+
+			<br><br>
+		<input type="button" id="guardar" name="guardar" value="GUARDAR">	
+		<input type="button" id="borrar" name="guardar" value="Borrar">
+		<input type="button" id="imprimir" name="imprimir" value="Imprimir">
+
+
+	</section>
+
+</body>
+</html>
